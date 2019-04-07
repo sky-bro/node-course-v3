@@ -11,11 +11,10 @@
 // console.log('Stopping');
 
 // api.openweathermap.org/data/2.5/forecast?id=524901&APPID=1111111111
-
-const request = require('request');
 const chalk = require('chalk');
 const geocode = require('./utils/geocode');
 const forcast = require('./utils/forcast');
+// const yargs = require('yargs');
 
 // const url = `http://api.openweathermap.org/data/2.5/forecast?id=2037013&APPID=${apiKey}`;
 
@@ -37,7 +36,7 @@ const forcast = require('./utils/forcast');
 //     }
 // });
 
-const geoUrl = 'http://ip-api.com/json';
+// const geoUrl = 'http://ip-api.com/json';
 // const geoUrl = 'https://ip.nf/me.json';
 
 // request({url:geoUrl, json:true}, (error, response) => {
@@ -62,16 +61,19 @@ const geoUrl = 'http://ip-api.com/json';
 //     }
 // });
 
-geocode('Boston', (error, geodata) => {
+const address = process.argv[2]?process.argv[2]:"Harbin Heilongjiang";
+// console.log(address);
+// return;
+geocode(address, (error, geodata) => {
     if (error){
-        console.log(chalk.red.inverse('Error'), error);
-    } else {
-        forcast(geodata.lat, geodata.lon, (error, weatherdata)=>{
-            if (error){
-                console.log(chalk.red.inverse('Error'), error);
-            } else {
-                console.log(chalk.cyan.inverse(`${weatherdata.name} is currently ${weatherdata.temp} celsius, with ${weatherdata.description}`));
-            }
-        });
+        return console.log(chalk.red.inverse('Error'), error);
     }
-})
+
+    forcast(geodata.lat, geodata.lon, (error, weatherdata)=>{
+        if (error){
+            console.log(chalk.red.inverse('Error'), error);
+        } else {
+            console.log(chalk.cyan.inverse(`${weatherdata.name} is currently ${weatherdata.temp} celsius, with ${weatherdata.description}`));
+        }
+    });
+});

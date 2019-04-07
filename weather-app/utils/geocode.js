@@ -1,8 +1,10 @@
 const request = require('request');
+const chalk = require('chalk');
 
 const geocode = (address, callback) =>{
     // this api does not use address, directly get coord using ip address
     const geoUrl = 'http://ip-api.com/json';
+    console.log(chalk.red.inverse(`Ignore address parameter ${encodeURIComponent(address)}, utilizing an api directly get coord from your ip address`));
     request({url: geoUrl, json: true}, (error, response) => {
         if (!error && response.body.status === 'success'){
             let geodata = {
