@@ -19,6 +19,7 @@ const addNote = (title, body) => {
     // const notes = getNotes();
     const notes = loadNotes();
     const duplicateNote = notes.find(note=>note.title===title);
+    debugger
     if (!duplicateNote){
         notes.push({
             title,
@@ -33,14 +34,14 @@ const addNote = (title, body) => {
 
 const removeNote = (title) => {
     // const notes = getNotes();
-    console.log(1);
+    // console.log(1);
     const notes = loadNotes();
     const notes2Save = notes.filter((note) => note.title !== title);
     if (notes2Save.length !== notes.length){
         console.log(chalk.bgGreen.black('Note removed!'));
         saveNotes(notes2Save);
     } else {
-        console.log(123);
+        // console.log(123);
         console.log(chalk.red.inverse('No note found!'));
     }
 };
