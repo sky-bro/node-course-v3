@@ -14,8 +14,9 @@
 
 const request = require('request');
 const chalk = require('chalk');
+const geocode = require('./utils/geocode');
+const getweather = require('./utils/getweather');
 
-apiKey = '7004c2e69aab1cf99a4abd698d9234c6';
 // const url = `http://api.openweathermap.org/data/2.5/forecast?id=2037013&APPID=${apiKey}`;
 
 // forcast weather
@@ -39,27 +40,38 @@ apiKey = '7004c2e69aab1cf99a4abd698d9234c6';
 const geoUrl = 'http://ip-api.com/json';
 // const geoUrl = 'https://ip.nf/me.json';
 
-let lat;
-let lon;
-let city;
-request({url:geoUrl, json:true}, (error, response) => {
-    if (!error && response.body.status==='success'){
-        lat = response.body.lat;
-        lon = response.body.lon;
-        city = response.body.city;
-        console.log(chalk.green.inverse(`Got geoCode: ${city} [${lat}, ${lon}]`));
-        const weatherUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${apiKey}`;
-        request({url: weatherUrl, json: true}, (error, response) => {
-            if (!error && response.body.cod == 200){
-                let temp = response.body.main.temp-271.15;
-                let name = response.body.name;
-                let weatherDescription = response.body.weather[0].description;
-                console.log(chalk.cyan.inverse(`${name} is currently ${temp} celsius, with ${weatherDescription}`));
+// request({url:geoUrl, json:true}, (error, response) => {
+//     if (!error && response.body.status==='success'){
+//         let lat = response.body.lat;
+//         let lon = response.body.lon;
+//         let city = response.body.city;
+//         console.log(chalk.green.inverse(`Got geoCode: ${city} [${lat}, ${lon}]`));
+//         const weatherUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${apiKey}`;
+//         request({url: weatherUrl, json: true}, (error, response) => {
+//             if (!error && response.body.cod == 200){
+//                 let temp = response.body.main.temp-271.15;
+//                 let name = response.body.name;
+//                 let weatherDescription = response.body.weather[0].description;
+//                 console.log(chalk.cyan.inverse(`${name} is currently ${temp} celsius, with ${weatherDescription}`));
+//             } else {
+//                 console.log(chalk.red.inverse('Cannot connect to weather service!'), error);
+//             }
+//         });
+//     } else {
+//         console.log(chalk.red.inverse('Cannot connect to geo service!'), error);
+//     }
+// });
+
+geocode('Boston', (error, geodata) => {
+    if (error){
+        console.log(chalk.red.inverse('Error'), error);
+    } else {
+        getweather(geodata, (error, weatherdata)=>{
+            if (error){
+                console.log(chalk.red.inverse('Error'), error);
             } else {
-                console.log(chalk.red.inverse('Cannot connect to weather service!'), error);
+                console.log(chalk.cyan.inverse(`${weatherdata.name} is currently ${weatherdata.temp} celsius, with ${weatherdata.description}`));
             }
         });
-    } else {
-        console.log(chalk.red.inverse('Cannot connect to geo service!'), error);
     }
-});
+})
