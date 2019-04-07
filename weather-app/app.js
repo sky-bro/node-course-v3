@@ -15,7 +15,7 @@
 const request = require('request');
 const chalk = require('chalk');
 const geocode = require('./utils/geocode');
-const getweather = require('./utils/getweather');
+const forcast = require('./utils/forcast');
 
 // const url = `http://api.openweathermap.org/data/2.5/forecast?id=2037013&APPID=${apiKey}`;
 
@@ -66,7 +66,7 @@ geocode('Boston', (error, geodata) => {
     if (error){
         console.log(chalk.red.inverse('Error'), error);
     } else {
-        getweather(geodata, (error, weatherdata)=>{
+        forcast(geodata.lat, geodata.lon, (error, weatherdata)=>{
             if (error){
                 console.log(chalk.red.inverse('Error'), error);
             } else {
