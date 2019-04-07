@@ -37,6 +37,8 @@ apiKey = '7004c2e69aab1cf99a4abd698d9234c6';
 // });
 
 const geoUrl = 'http://ip-api.com/json';
+// const geoUrl = 'https://ip.nf/me.json';
+
 let lat;
 let lon;
 let city;
