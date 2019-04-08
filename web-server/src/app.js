@@ -5,7 +5,15 @@ const forcast = require('../../weather-app/utils/forcast');
 
 
 const app = express();
+app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, '../public')));
+
+app.get('/', (req, res)=>{
+    res.render('index', {
+        title: 'Weather App',
+        name: 'sky_bro'
+    });
+});
 
 app.get('/weather', (req, res)=>{
     // res.send('<h1>Weather Page!</h1>');
