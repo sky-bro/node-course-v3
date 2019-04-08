@@ -1,20 +1,11 @@
+const path = require('path');
 const express = require('express');
 const geocode = require('../../weather-app/utils/geocode');
 const forcast = require('../../weather-app/utils/forcast');
 
+
 const app = express();
-
-app.get('', (req, res)=>{
-    res.send('<h1>Hello Express!</h1>');
-})
-
-app.get('/help', (req, res)=>{
-    res.send('<h1>Help Page!</h1>');
-})
-
-app.get('/about', (req, res)=>{
-    res.send('<h1>About Page!</h1>');
-})
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/weather', (req, res)=>{
     // res.send('<h1>Weather Page!</h1>');
