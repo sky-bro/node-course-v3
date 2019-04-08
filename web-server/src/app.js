@@ -53,7 +53,7 @@ app.get('/weather', (req, res)=>{
             if (error){
                 res.send(chalk.red.inverse('Error'), error);
             } else {
-                res.send(weatherdata);
+                res.render('weather', {weatherdata, title: 'Weather'});
             }
         });
     });
