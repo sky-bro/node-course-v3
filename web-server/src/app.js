@@ -59,6 +59,22 @@ app.get('/weather', (req, res)=>{
     });
 })
 
+app.get('/help/*', (req, res)=>{
+    res.render('404', {
+        errorMsg: 'help article not found',
+        title: 404,
+        name: "sky_bro"
+    })
+})
+
+app.get('*', (req, res)=>{
+    res.render('404', {
+        errorMsg: '404 not found',
+        title: 404,
+        name: "sky_bro"
+    })
+});
+
 const port = process.env.port?process.env.port:3000;
 app.listen(port, ()=>{
     console.log(`Server is up on ${port}`);
