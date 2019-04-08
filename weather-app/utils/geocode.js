@@ -5,15 +5,15 @@ const geocode = (address, callback) =>{
     // this api does not use address, directly get coord using ip address
     const geoUrl = 'http://ip-api.com/json';
     console.log(chalk.red.inverse(`Ignore address parameter ${encodeURIComponent(address)}, utilizing an api directly get coord from your ip address`));
-    request({url: geoUrl, json: true}, (error, response) => {
-        if (!error && response.body.status === 'success'){
+    request({url: geoUrl, json: true}, (error, {body}) => {
+        if (!error && body.status === 'success'){
             let geodata = {
                 // temp: response.body.main.temp-271.15,
                 // name: response.body.name,
                 // weatherDescription: response.body.weather[0].description
-                lat: response.body.lat,
-                lon: response.body.lon,
-                city: response.body.city
+                lat: body.lat,
+                lon: body.lon,
+                city: body.city
             };
             callback(null, geodata);
         } else {

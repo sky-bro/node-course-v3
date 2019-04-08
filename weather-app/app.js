@@ -64,16 +64,16 @@ const forcast = require('./utils/forcast');
 const address = process.argv[2]?process.argv[2]:"Harbin Heilongjiang";
 // console.log(address);
 // return;
-geocode(address, (error, geodata) => {
+geocode(address, (error, {lat, lon}) => {
     if (error){
         return console.log(chalk.red.inverse('Error'), error);
     }
 
-    forcast(geodata.lat, geodata.lon, (error, weatherdata)=>{
+    forcast(lat, lon, (error, {name, temp, description})=>{
         if (error){
             console.log(chalk.red.inverse('Error'), error);
         } else {
-            console.log(chalk.cyan.inverse(`${weatherdata.name} is currently ${weatherdata.temp} celsius, with ${weatherdata.description}`));
+            console.log(chalk.cyan.inverse(`${name} is currently ${temp} celsius, with ${description}`));
         }
     });
 });
