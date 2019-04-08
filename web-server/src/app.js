@@ -15,6 +15,21 @@ app.get('/', (req, res)=>{
     });
 });
 
+app.get('/about', (req, res)=>{
+    res.render('about', {
+        title: 'About',
+        name: 'sky_bro'
+    });
+});
+
+app.get('/help', (req, res)=>{
+    res.render('help', {
+        title: 'Help',
+        helpTest: 'Some helpful text',
+        name: 'sky_bro'
+    });
+});
+
 app.get('/weather', (req, res)=>{
     // res.send('<h1>Weather Page!</h1>');
     geocode("Boston", (error, {lat, lon}) => {
