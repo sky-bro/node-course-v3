@@ -44,16 +44,46 @@ app.get('/help', (req, res)=>{
 
 app.get('/weather', (req, res)=>{
     // res.send('<h1>Weather Page!</h1>');
-    geocode("Boston", (error, {lat, lon}) => {
+    let address = req.query.address;
+    let lat = req.query.lat;
+    let lon = req.query.lon;
+    if (lat && lon) {
+        return forcast(lat, lon, (error, weatherdata)=>{
+            if (error){
+                res.send({
+                    error
+                });
+            } else {
+                // res.render('weather', {weatherdata, title: 'Weather'});
+                res.send({
+                    weatherdata
+                })
+            }
+        });
+    } else if(!address){
+        return res.send({
+            error: 'you must provide an address'
+        });
+    }
+
+    // cannot desctructure undefined
+    geocode("address", (error, {lat, lon}={}) => {
         if (error){
-            return res.send(chalk.red.inverse('Error'), error);
+            return res.send({
+                error
+            });
         }
     
         forcast(lat, lon, (error, weatherdata)=>{
             if (error){
-                res.send(chalk.red.inverse('Error'), error);
+                res.send({
+                    error
+                });
             } else {
-                res.render('weather', {weatherdata, title: 'Weather'});
+                // res.render('weather', {weatherdata, title: 'Weather'});
+                res.send({
+                    weatherdata
+                })
             }
         });
     });
