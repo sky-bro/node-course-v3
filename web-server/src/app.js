@@ -55,9 +55,7 @@ app.get('/weather', (req, res)=>{
                 });
             } else {
                 // res.render('weather', {weatherdata, title: 'Weather'});
-                res.send({
-                    weatherdata
-                })
+                res.send(weatherdata)
             }
         });
     } else if(!address){
@@ -81,9 +79,7 @@ app.get('/weather', (req, res)=>{
                 });
             } else {
                 // res.render('weather', {weatherdata, title: 'Weather'});
-                res.send({
-                    weatherdata
-                })
+                res.send(weatherdata)
             }
         });
     });
