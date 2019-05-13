@@ -7,7 +7,7 @@ const forcast = (lat, lon, callback) =>{
     request({url: weatherUrl, json: true}, (error, {body}) => {
         if (!error && body.cod == 200){
             let weatherdata = {
-                temp: body.main.temp-271.15,
+                temp: (body.main.temp-271.15).toFixed(2),
                 name: body.name,
                 description: body.weather[0].description
             };
