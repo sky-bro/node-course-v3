@@ -1,4 +1,4 @@
-// CRUD creat read update delete
+// CRUD create read update delete
 
 const { MongoClient, ObjectID } = require('mongodb');
 
@@ -24,44 +24,68 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     //     console.log(result.ops);
     // });
 
-    db.collection('tasks').insertMany([
-        {
-            description: 'buy apples',
-            completed: true
-        },
-        {
-            description: 'go to bed early',
-            completed: false
-        },
-        {
-            description: 'review compilers',
-            completed: false
-        }
-    ], (error, result) => {
-        if (error){
-            return console.log('unable to insert tasks');
-        }
-        console.log(result.ops);
+    // db.collection('tasks').insertMany([
+    //     {
+    //         description: 'buy apples',
+    //         completed: true
+    //     },
+    //     {
+    //         description: 'go to bed early',
+    //         completed: false
+    //     },
+    //     {
+    //         description: 'review compilers',
+    //         completed: false
+    //     }
+    // ], (error, result) => {
+    //     if (error){
+    //         return console.log('unable to insert tasks');
+    //     }
+    //     console.log(result.ops);
+    // });
+
+    // db.collection('tasks').findOne({completed: false}, (error, result) => {
+    //     if (error){
+    //         return console.log(error);
+    //     }
+    //     console.log(result);
+    // });
+
+    // db.collection('tasks').find({completed:false}).count((error, count) => {
+    //     if (!error)
+    //         console.log(`got ${count} result`);
+    // })
+
+    // db.collection('tasks').find({completed:false}).toArray((error, tasks)=>{
+    //     if (!error)
+    //         console.log(tasks);
+    // })
+    // db.collection('users').updateOne({name: 'sky'},{
+    //     $inc: {
+    //         age: -2
+    //     }
+    // }).then((result) => {
+    //     console.log("ModifiedCount", result.modifiedCount);
+    // }).catch(error => {
+    //     console.log(error);
+    // });
+
+    // db.collection('tasks').updateMany({completed: false}, {
+    //     $set: {
+    //         completed: true
+    //     }
+    // }).then(result => {
+    //     console.log("ModifiedCount", result.modifiedCount);
+    // }).catch(error => {
+    //     console.log(error);
+    // })
+
+    db.collection('users').deleteMany({name: 'sky'})
+    .then(result => {
+        console.log(result.deletedCount);
+    }).catch(error => {
+        console.log(error);
     });
-
-    db.collection('tasks').findOne({completed: false}, (error, result) => {
-        if (error){
-            return console.log(error);
-        }
-        console.log(result);
-    });
-
-    db.collection('tasks').find({completed:false}).count((error, count) => {
-        if (!error)
-            console.log(`got ${count} result`);
-    })
-
-    db.collection('tasks').find({completed:false}).toArray((error, tasks)=>{
-        if (!error)
-            console.log(tasks);
-    })
-
-
-
+    
     client.close();
 })
