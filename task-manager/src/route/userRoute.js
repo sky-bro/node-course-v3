@@ -35,10 +35,12 @@ route.patch("/users/:id", async (req, res) => {
     }
 
     try {
-        let user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+        let user = await User.findById(req.params.id);
         if (!user){
             return res.status(404).send();
         }
+        Object.assign(user, req.body);
+        await user.save();
         res.send(user);
     } catch(e){
         res.status(400).send(e);
