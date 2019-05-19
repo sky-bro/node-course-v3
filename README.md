@@ -14,3 +14,4 @@
 * yargs
 * validator
 * request
+* bcrypt
