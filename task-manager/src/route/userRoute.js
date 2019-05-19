@@ -3,6 +3,16 @@ const User = require('../models/user');
 
 const route = new express.Router();
 
+route.post("/users/login", async (req, res) => {
+    
+    try {
+        let user = await User.findByCredentials(req.body.email, req.body.password);
+        res.send(user);
+    } catch(e){
+        res.status(400).send({error: "unable to login"});
+    }
+});
+
 route.post("/users/add", async (req, res) => {
     console.log(req.body);
     let user = new User(req.body);
