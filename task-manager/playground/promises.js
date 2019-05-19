@@ -1,29 +1,19 @@
-const doWorkCallback = (callback) => {
-    setTimeout(()=>{
-        callback('This is an error-callback', undefined);
-        callback(undefined, 'Success-Callback!');
-    }, 2000);
+const add = (a, b) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(a + b);
+        }, 200);
+    })
 }
 
-doWorkCallback((error, result) => {
-    if (error){
-        return console.log(error);
-    }
-    console.log(result);
+add(1,2).then((sum) => {
+    console.log(sum);
+    return add(sum, 3);
+}).then(sum => {
+    console.log(sum);
+    return add(sum, 4);
+}).then(sum => {
+    console.log(sum);
+}).catch(e => {
+    console.log(e);
 })
-
-const doWorkPromise = new Promise((resolve, reject) => {
-    setTimeout(()=>{
-        reject('This is an Error-Promise');
-        console.log('hello after reject!');
-        resolve('Success-Promise!');
-    }, 2000);
-})
-
-doWorkPromise.then(result=>{
-    console.log(result);
-}).catch(error=>{
-    console.log(error);
-})
-
-console.log('hello');
